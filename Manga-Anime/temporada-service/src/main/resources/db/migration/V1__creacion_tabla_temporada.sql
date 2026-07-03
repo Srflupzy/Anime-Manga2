@@ -1,0 +1,5 @@
+CREATE TABLE temporadas (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    numero INT NOT NULL,
+    id_anime BIGINT NOT NULL
+);

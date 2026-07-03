@@ -1,0 +1,6 @@
+CREATE TABLE personajes (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    rol VARCHAR(50) NOT NULL,
+    id_anime BIGINT NOT NULL
+);

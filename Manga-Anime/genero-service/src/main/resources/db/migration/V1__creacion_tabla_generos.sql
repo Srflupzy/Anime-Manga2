@@ -1,0 +1,5 @@
+CREATE TABLE generos (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    descripcion VARCHAR(150)
+);

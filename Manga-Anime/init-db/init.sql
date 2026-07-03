@@ -1,0 +1,10 @@
+CREATE DATABASE bd_animes;
+CREATE DATABASE bd_generos;
+CREATE DATABASE bd_mangas;
+CREATE DATABASE bd_personajes;
+CREATE DATABASE bd_temporadas;
+CREATE DATABASE bd_episodios;
+CREATE DATABASE bd_estudios;
+CREATE DATABASE bd_usuarios;
+CREATE DATABASE bd_reviews;
+CREATE DATABASE bd_favoritos;

@@ -1,0 +1,5 @@
+CREATE TABLE favoritos (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario BIGINT NOT NULL,
+    id_anime BIGINT NOT NULL
+);

@@ -1,0 +1,108 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway-service
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: anime-service
+              uri: lb://anime-service
+              predicates:
+                - Path=/api/v1/animes/**, /v3/api-docs/animes
+              filters:
+                - RewritePath=/v3/api-docs/animes, /v3/api-docs
+
+            - id: episodio-service
+              uri: lb://episodio-service
+              predicates:
+                - Path=/api/v1/episodios/**, /v3/api-docs/episodios
+              filters:
+                - RewritePath=/v3/api-docs/episodios, /v3/api-docs
+
+            - id: estudio-service
+              uri: lb://estudio-service
+              predicates:
+                - Path=/api/v1/estudios/**, /v3/api-docs/estudios
+              filters:
+                - RewritePath=/v3/api-docs/estudios, /v3/api-docs
+
+            - id: favorito-service
+              uri: lb://favorito-service
+              predicates:
+                - Path=/api/v1/favoritos/**, /v3/api-docs/favoritos
+              filters:
+                - RewritePath=/v3/api-docs/favoritos, /v3/api-docs
+
+            - id: genero-service
+              uri: lb://genero-service
+              predicates:
+                - Path=/api/v1/generos/**, /v3/api-docs/generos
+              filters:
+                - RewritePath=/v3/api-docs/generos, /v3/api-docs
+
+            - id: manga-service
+              uri: lb://manga-service
+              predicates:
+                - Path=/api/v1/mangas/**, /v3/api-docs/mangas
+              filters:
+                - RewritePath=/v3/api-docs/mangas, /v3/api-docs
+
+            - id: personaje-service
+              uri: lb://personaje-service
+              predicates:
+                - Path=/api/v1/personajes/**, /v3/api-docs/personajes
+              filters:
+                - RewritePath=/v3/api-docs/personajes, /v3/api-docs
+
+            - id: review-service
+              uri: lb://review-service
+              predicates:
+                - Path=/api/v1/reviews/**, /v3/api-docs/reviews
+              filters:
+                - RewritePath=/v3/api-docs/reviews, /v3/api-docs
+
+            - id: temporada-service
+              uri: lb://temporada-service
+              predicates:
+                - Path=/api/v1/temporadas/**, /v3/api-docs/temporadas
+              filters:
+                - RewritePath=/v3/api-docs/temporadas, /v3/api-docs
+
+            - id: usuario-service
+              uri: lb://usuario-service
+              predicates:
+                - Path=/api/v1/usuarios/**, /v3/api-docs/usuarios
+              filters:
+                - RewritePath=/v3/api-docs/usuarios, /v3/api-docs
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: anime-service
+        url: /v3/api-docs/animes
+      - name: episodio-service
+        url: /v3/api-docs/episodios
+      - name: estudio-service
+        url: /v3/api-docs/estudios
+      - name: favorito-service
+        url: /v3/api-docs/favoritos
+      - name: genero-service
+        url: /v3/api-docs/generos
+      - name: manga-service
+        url: /v3/api-docs/mangas
+      - name: personaje-service
+        url: /v3/api-docs/personajes
+      - name: review-service
+        url: /v3/api-docs/reviews
+      - name: temporada-service
+        url: /v3/api-docs/temporadas
+      - name: usuario-service
+        url: /v3/api-docs/usuarios
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8901/eureka/}

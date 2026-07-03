@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: favoritos-service
+  config:
+    import: ${SPRING_CONFIG_IMPORT:configserver:http://localhost:8888}
+
+    cloud:
+      config:
+        enabled: false
+
+eureka:
+  client:
+    enabled: false

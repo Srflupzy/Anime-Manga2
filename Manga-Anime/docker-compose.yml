@@ -1,0 +1,273 @@
+services:
+  mysql-db:
+    restart: always
+    image: mysql:8.0
+    container_name: mysql_database
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init-db:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
+
+  eureka:
+    restart: always
+    build:
+      context: ./eureka-service
+      dockerfile: Dockerfile
+    container_name: eureka
+    ports:
+      - "8901:8901"
+    depends_on:
+      mysql-db:
+        condition: service_started
+
+  config-server:
+    restart: always
+    build:
+      context: ./config-server
+      dockerfile: Dockerfile
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8901/eureka/
+      # CORRECCIÓN: Inyección de la ruta sin el punto para el volumen de Docker
+      CONFIG_SEARCH_LOCATIONS: file:/config-microservicios
+    volumes:
+      - ./config-microservicios:/config-microservicios
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+
+  animes-service:
+    restart: always
+    build:
+      context: ./anime-service
+      dockerfile: Dockerfile
+    container_name: animes
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8901/eureka/
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_animes
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+
+  episodios-service:
+    restart: always
+    build:
+      context: ./episodio-service
+      dockerfile: Dockerfile
+    container_name: episodios
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8901/eureka/
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_episodios
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+
+  estudios-service:
+    restart: always
+    build:
+      context: ./estudio-service
+      dockerfile: Dockerfile
+    container_name: estudios
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8901/eureka/
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_estudios
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+
+  favoritos-service:
+    restart: always
+    build:
+      context: ./favoritos-service
+      dockerfile: Dockerfile
+    container_name: favoritos
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8901/eureka/
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_favoritos
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+
+  generos-service:
+    restart: always
+    build:
+      context: ./genero-service
+      dockerfile: Dockerfile
+    container_name: generos
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8901/eureka/
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_generos
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+
+  mangas-service:
+    restart: always
+    build:
+      context: ./manga-service
+      dockerfile: Dockerfile
+    container_name: mangas
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8901/eureka/
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_mangas
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+
+  personajes-service:
+    restart: always
+    build:
+      context: ./personaje-service
+      dockerfile: Dockerfile
+    container_name: personajes
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8901/eureka/
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_personajes
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+
+  reviews-service:
+    restart: always
+    build:
+      context: ./review-service
+      dockerfile: Dockerfile
+    container_name: reviews
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8901/eureka/
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_reviews
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+
+  temporadas-service:
+    restart: always
+    build:
+      context: ./temporada-service
+      dockerfile: Dockerfile
+    container_name: temporadas
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8901/eureka/
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_temporadas
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+
+  usuarios-service:
+    restart: always
+    build:
+      context: ./usuario-service
+      dockerfile: Dockerfile
+    container_name: usuarios
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8901/eureka/
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_usuarios
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+
+  api-gateway:
+    restart: always
+    build:
+      context: ./api-gateway-service
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8901/eureka/
+    depends_on:
+      - eureka
+      - config-server
+      - animes-service
+      - episodios-service
+      - mangas-service
+      - temporadas-service
+      - personajes-service
+      - reviews-service
+      - usuarios-service
+      - estudios-service
+      - generos-service
+      - favoritos-service
+      - mysql-db
+
+volumes:
+  mysql_data:

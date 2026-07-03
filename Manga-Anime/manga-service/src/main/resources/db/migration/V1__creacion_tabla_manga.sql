@@ -1,0 +1,7 @@
+CREATE TABLE mangas (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(100) NOT NULL,
+    autor VARCHAR(100) NOT NULL,
+    tomos INT NOT NULL,
+    id_genero BIGINT NOT NULL
+);

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="eureka-service" />
+        <module name="config-server" />
+      </profile>
+      <profile name="Annotation profile for usuario-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
+        </processorPath>
+        <module name="usuario-service" />
+        <module name="favoritos-service" />
+        <module name="api-gateway-service" />
+        <module name="review-service" />
+        <module name="episodio-service" />
+        <module name="anime-service" />
+        <module name="temporada-service" />
+        <module name="genero-service" />
+        <module name="personaje-service" />
+        <module name="manga-service" />
+        <module name="favorito-service" />
+        <module name="estudio-service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="anime-service" options="-parameters" />
+      <module name="api-gateway-service" options="-parameters" />
+      <module name="config-server" options="-parameters" />
+      <module name="episodio-service" options="-parameters" />
+      <module name="estudio-service" options="-parameters" />
+      <module name="eureka-service" options="-parameters" />
+      <module name="favorito-service" options="-parameters" />
+      <module name="favoritos-service" options="-parameters" />
+      <module name="genero-service" options="-parameters" />
+      <module name="manga-service" options="-parameters" />
+      <module name="personaje-service" options="-parameters" />
+      <module name="review-service" options="-parameters" />
+      <module name="temporada-service" options="-parameters" />
+      <module name="usuario-service" options="-parameters" />
+    </option>
+  </component>
+</project>
